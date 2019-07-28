@@ -1,0 +1,11 @@
+{
+    "nossonCotlar":{
+        "licenseType":"full paid", 
+        "key":"K24B"
+    }, 
+
+    "danielCotlar":{
+        "licenseType":"beta license", 
+        "key":"L24B"
+    }
+}
