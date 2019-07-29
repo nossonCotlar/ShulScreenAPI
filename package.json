@@ -9,8 +9,9 @@
   "devDependencies": {},
   "scripts": {
     "test": "tes",
-    "start": "node server.js"
+    "start": "node server.js", 
+    "build": "node.js build --output public"
   },
-  "author": "",
+  "author": "Nosson Cotlar",
   "license": "ISC"
 }

@@ -7,7 +7,7 @@ app.get('/', function(request, response){
     //response.send('Hello World');
     var check = verify(request.query.user, request.query.key);
     
-    console.log(request.query.user + ' ' + request.query.key + ': ' + check);
+    console.log(request.query.user + ' ' + request.query.key + ': ' + check + '\n');
     response.send(check);
     response.end();
 });
