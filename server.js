@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const app = express();
-const port = 3000;
+const port = 6969;
 
 app.get('/', function(request, response){
     //response.send('Hello World');
@@ -12,7 +12,13 @@ app.get('/', function(request, response){
     response.end();
 
     var timeNow = new Date();
-    console.log(timeNow.toUTCString() + '>>' + request.query.user + ' ' + request.query.key + ': ' + check + '\n');
+    if(check){
+        console.log(timeNow.toUTCString() + '>>' + request.query.user + ' ' + request.query.key + ': licensed' + '\n');
+    }
+    else{
+        console.log('\x1b[33m%s\x1b[0m' + timeNow.toUTCString() + '>>' + request.query.user + ' ' + request.query.key + ': unlicensed' + '\n');
+    }
+    
 });
 
 app.listen(port, function(){
