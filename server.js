@@ -16,7 +16,7 @@ app.get('/', function(request, response){
         console.log(timeNow.toUTCString() + '>>' + request.query.user + ' ' + request.query.key + ': licensed' + '\n');
     }
     else{
-        console.log('\x1b[33m%s\x1b[0m' + timeNow.toUTCString() + '>>' + request.query.user + ' ' + request.query.key + ': unlicensed' + '\n');
+        console.log('\x1b[31m' + timeNow.toUTCString() + '>>' + request.query.user + ' ' + request.query.key + ': unlicensed' + '\n');
     }
     
 });
