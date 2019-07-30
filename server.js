@@ -4,7 +4,6 @@ const app = express();
 const port = 6969;
 
 app.get('/', function(request, response){
-    //response.send('Hello World');
     var check = verify(request.query.user, request.query.key);
     
     
@@ -16,9 +15,20 @@ app.get('/', function(request, response){
         console.log(timeNow.toUTCString() + '>>' + request.query.user + ' ' + request.query.key + ': licensed' + '\n');
     }
     else{
-        console.log('\x1b[31m' + timeNow.toUTCString() + '>>' + request.query.user + ' ' + request.query.key + ': unlicensed' + '\n');
+        console.log(timeNow.toUTCString() + '>>' + request.query.user + ' ' + request.query.key + ': unlicensed' + '\n');
     }
     
+});
+
+app.get('/add', function(req, res){
+    if(req.query.secret == 'getBread1'){
+        addLicense(req.query.user, req.query.type, req.query.key);
+        console.log('success');
+        res.end('success');
+        return;
+    }
+    console.log('failed');
+    res.end('failed');
 });
 
 app.listen(port, function(){
@@ -28,5 +38,10 @@ console.log('Server ready :)');
 function verify(user, key){
     var users = fs.readFileSync('users.json');
     var jsonContent = JSON.parse(users);
+    console.log(user + ": " + jsonContent[user]);
     return jsonContent[user].key === key;
+}
+
+function addLicense(user, type, key){
+
 }

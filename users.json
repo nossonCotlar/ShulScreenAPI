@@ -1,11 +1,12 @@
 {
-    "nossonCotlar":{
-        "licenseType":"full paid", 
-        "key":"K24B-8AU2-JAEU-816Y"
-    }, 
+
+     "nossonCotlar":{
+        "key":"K24B-8AU2-JAEU-816Y", 
+        "licenseType":"full paid"
+    }  ,
 
     "danielCotlar":{
-        "licenseType":"beta license", 
-        "key":"L24B"
-    }
+        "key":"K24B", 
+        "licenseType":"beta"
+    } 
 }
