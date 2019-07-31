@@ -1,0 +1,20 @@
+[
+  {
+    "user": "nossonCotlar",
+    "key": "K24B-8AU2-JAEU-816Y",
+    "type": "admin",
+    "dateAdded": "Wed, 31 Jul 2019 23:15:47 GMT"
+  },
+  {
+    "user": "danielCotlar",
+    "key": "UH28-M8H2-O395-NJW4",
+    "type": "full paid",
+    "dateAdded": "Wed, 31 Jul 2019 23:17:49 GMT"
+  },
+  {
+    "user": "test",
+    "key": "UH28-M8H2-O395-NJW4",
+    "type": "full paid",
+    "dateAdded": "Wed, 31 Jul 2019 23:22:57 GMT"
+  }
+]
