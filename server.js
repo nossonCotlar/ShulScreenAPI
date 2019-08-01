@@ -10,12 +10,11 @@ app.get('/', function(request, response){
     response.send(check);
     response.end();
 
-    var timeNow = new Date();
     if(check){
-        console.log(timeNow.toUTCString() + '>>  ' + request.query.user + ' ' + request.query.key + ': licensed' + '\n');
+        console.log(request.ip + '>>  ' + request.query.user + ' ' + request.query.key + ': licensed' + '\n');
     }
     else{
-        console.log(timeNow.toUTCString() + '>>  ' + request.query.user + ' ' + request.query.key + ': unlicensed' + '\n');
+        console.log(request.ip + '>>  ' + request.query.user + ' ' + request.query.key + ': unlicensed' + '\n');
     }
     
 });
@@ -46,6 +45,7 @@ function verify(user, key){
             break;
         }
     }
+    if(jsonSingle == undefined) return false;
     return(jsonSingle.key === key); //return whether the key from request query matches the single object's key
     
 }
