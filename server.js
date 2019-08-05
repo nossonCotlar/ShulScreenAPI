@@ -1,9 +1,18 @@
+const productVersion = 'alpha.1.3';
+
 const express = require('express');
+var parser = require('body-parser');
 const fs = require('fs');
 const app = express();
 const port = 6969;
+const secret = 'getBread1';
 
-app.get('/', function(request, response){
+app.use('/add', express.static('public'));
+app.use(parser.urlencoded({extended: false}));
+app.use(parser.json());
+
+
+app.get('/verify', function(request, response){
     var check = verify(request.query.user, request.query.key); //as of now it accepts requests made as URL queries, will switch to params later
     
     
@@ -11,27 +20,20 @@ app.get('/', function(request, response){
     response.end();
 
     if(check){
-        console.log(request.ip + '>>  ' + request.query.user + ' ' + request.query.key + ': licensed' + '\n');
+        console.log(request.ip + ' >>  ' + request.query.user + ' ' + request.query.key + ': licensed' + '\n');
     }
     else{
-        console.log(request.ip + '>>  ' + request.query.user + ' ' + request.query.key + ': unlicensed' + '\n');
+        console.log(request.ip + ' >>  ' + request.query.user + ' ' + request.query.key + ': unlicensed' + '\n');
     }
     
 });
 
-app.get('/add/:secret/:user/:key/:type', function(req, res){
-    if(req.params.secret == 'getBread1'){
-        addLicense(req.params);
-        
-        res.end('User has been added!' + JSON.stringify(req.params, null, 2));
-        return;
-    }
-    console.log('secret was incorrect');
-    res.end('secret was incorrect');
-});
+app.post('/postadd', addLicenseFromPost);
+
+app.get('/version', versionCheck);
 
 app.listen(port, function(){
-console.log('Server ready :)');
+console.log('Listening on ' + port + '...');
 });
 
 function verify(user, key){
@@ -50,17 +52,30 @@ function verify(user, key){
     
 }
 
-function addLicense(params){
-var text = fs.readFileSync('new.json', 'utf8'); //reads file data
-var jsonFile = JSON.parse(text); //make it json
-delete params.secret; //make sure the secret field doesnt get saved
+function addLicenseFromPost(request, response){
+    
+    var objToAdd = request.body;
+    //console.log(objToAdd);
+    if(objToAdd.secret != secret){
+        response.end('secret is incorrect');
+        console.log(objToAdd.secret);
+        console.log('License addition attempted: incorrect secret');
+        return;
+    }
+    delete objToAdd.secret;
+    objToAdd.dateAdded = (new Date()).toUTCString();
 
-params.dateAdded = (new Date()).toUTCString(); //add the current time to the object
+    var text = fs.readFileSync('new.json', 'utf8'); //reads file data
+    var jsonFile = JSON.parse(text); //make it json
+    jsonFile.push(objToAdd);
+    var jsonFileString = JSON.stringify(jsonFile, null, 2);
+    fs.writeFileSync('new.json', jsonFileString);
 
-jsonFile.push(params); //add the object to the array from file
-var string = JSON.stringify(jsonFile, null, 2); //format object to text 
-fs.writeFileSync('new.json', string); //save
+    response.end('User has been added!\n' + JSON.stringify(objToAdd, null, 2));
+    console.log('User has been added!\n' + JSON.stringify(objToAdd, null, 2));
+    
+}
 
-console.log('User has been added!' + JSON.stringify(params, null, 2));
-
+function versionCheck(request, response){
+response.end(productVersion);
 }
