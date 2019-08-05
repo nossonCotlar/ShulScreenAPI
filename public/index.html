@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>ShulScreen</title>
 </head>
 
 <body>
-    <p>
-       
-            
-            User: <br>
-            <input id='user' type='text'> <br>
-            Key: <br>
-            <input id='key' type='text'> <br>
-            License Type: <br>
-            <input id='type' type='text' value='full paid'> <br>
-            Secret: <br>
-            <input id='secret' type='text'> <br>
-
-            <input id='submit' type='submit'>
-        
-        
+    User: <br>
+    <input id="user" type="text" value="nossonCotlar" required> <br>
+    Key: <br>
+    <input id="key" type="text" value="K24B-8AU2-JAEU-816Y" required> <br>
+    <p>Select which area you'd like to enter text for:</p>
+    <input type="radio" name="selectArea" value="donors"> Donors<br>
+    <input type="radio" name="selectArea" value="annoucements"> Announcements<br>
+    <input type="radio" name="selectArea" value="memorial"> Memorial<br>
+    <p>Type your entry here: <br>
+    <textarea id="textEntry" rows="10" cols="50"></textarea>
     </p>
-    
+    <input type="submit" value="Submit" id="submit" onclick="submit();"> <br>
+
+    <script src="index.js"></script>
 </body>
-<script src="front.js"></script>
+
+<footer>
+
+</footer>
+
 </html>
