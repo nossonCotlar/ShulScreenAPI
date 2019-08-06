@@ -1,11 +1,17 @@
 const productVersion = 'alpha.1.5';
 
 const express = require('express');
+var https = require('https');
 var parser = require('body-parser');
 const fs = require('fs');
 const app = express();
 const port = 6969;
 const secret = 'getBread1';
+
+https.createServer({
+    key: fs.readFileSync('ssl/ssl.key'), 
+    cert: fs.readFileSync('ssl/ssl.cert')
+}, app).listen(3000);
 
 app.use('/add', express.static('addLicense'));
 app.use('/', express.static('public'));
