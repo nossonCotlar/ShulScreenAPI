@@ -8,10 +8,12 @@ const app = express();
 const port = 6969;
 const secret = 'getBread1';
 
+/*
 https.createServer({
     key: fs.readFileSync('ssl/ssl.key'), 
     cert: fs.readFileSync('ssl/ssl.cert')
 }, app).listen(3000);
+*/
 
 app.use('/add', express.static('addLicense'));
 app.use('/', express.static('public'));
