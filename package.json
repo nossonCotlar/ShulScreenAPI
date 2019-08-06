@@ -4,12 +4,13 @@
   "description": "just a test server",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "openssl": "^1.1.0"
   },
   "devDependencies": {},
   "scripts": {
     "test": "tes",
-    "start": "node server.js", 
+    "start": "node server.js",
     "build": "node.js build --output public"
   },
   "author": "Nosson Cotlar",

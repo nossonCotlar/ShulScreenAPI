@@ -21,6 +21,8 @@ app.post('/textSubmit', addToPendingSyncs);
 
 app.get('/textPull/:user/:key', sendSubmissionToClient);
 
+app.get('/parsha/:parsha/:day', sendParshaContent)
+
 app.get('/version', versionCheck);
 
 app.listen(port, function () {
@@ -92,8 +94,8 @@ function sendSubmissionToClient(request, response) {
         
     }
     response.end(JSON.stringify(objToSend, null, 2));
-    if(objToSend.available == false) console.log("nothing was available");
-    else console.log("Sent Sync Content to client and deleted from Database: \n" + 
+    //if(objToSend.available == false) console.log("nothing was available");
+    if(objToSend.available == true) console.log("Sent Sync Content to client and deleted from Database: \n" + 
     JSON.stringify(objToSend, null, 2));
 }
 
@@ -149,6 +151,14 @@ function addLicenseFromPost(request, response) {
     response.end('User has been added!\n' + JSON.stringify(objToAdd, null, 2));
     console.log('User has been added!\n' + JSON.stringify(objToAdd, null, 2));
 
+}
+
+function sendParshaContent(request, response){
+    var parshaPath = 'parsha/' + request.params.parsha + '/' + request.params.day + '.txt';
+    var parshaFile = fs.readFileSync(parshaPath, 'ascii');
+    response.end(parshaFile);
+    //console.log(parshaFile);
+    console.log('Sent parsha content in: ' + parshaPath + ' to: ' + request.ip)
 }
 
 function versionCheck(request, response) {
