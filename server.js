@@ -15,6 +15,7 @@ https.createServer({
 }, app).listen(3000);
 */
 
+
 app.use('/add', express.static('addLicense'));
 app.use('/', express.static('public'));
 app.use(parser.urlencoded({ extended: false }));
@@ -36,6 +37,7 @@ app.get('/version', versionCheck);
 app.listen(port, function () {
     console.log('Listening on ' + port + '...');
 });
+
 
 function addToPendingSyncs(request, response) {
     var data = request.body;
