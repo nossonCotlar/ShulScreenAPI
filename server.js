@@ -19,8 +19,10 @@ https.createServer({
 app.use('/add', express.static('addLicense'));
 app.use('/', express.static('public'));
 app.use(parser.urlencoded({ extended: false }));
-app.use(parser.json());
+app.use(parser.json('application/json'));
+//app.use(parser.text('text/plain'));
 
+app.post('/mainPost', mainPost);
 
 app.get('/verify', verifyWrapper);
 
@@ -38,6 +40,46 @@ app.listen(port, function () {
     console.log('Listening on ' + port + '...');
 });
 
+function mainPost(request, response){
+    console.log(request.body);
+
+    var parsha, donors, announcements, memorial;
+    try{ //try to set the parsha value to the requested path
+        parsha = fs.readFileSync('parsha/' + request.body.parsha + '/' + request.body.dayOfWeek + '.txt', 'ascii');
+    } catch { //if it fails set it to null
+        parsha = null;
+    }
+
+    var pendingSyncs = JSON.parse(fs.readFileSync('pendingSyncs.json', 'ascii'));
+
+    for(var i = 0; i < pendingSyncs.length; i++){
+        if(pendingSyncs[i].user == request.body.user && pendingSyncs[i].key == request.body.key){
+            switch(pendingSyncs[i].selection){
+                case 'donors': donors = pendingSyncs[i].text; break;
+                case 'announcements': announcements = pendingSyncs[i].text; break;
+                case 'memorial': memorial = pendingSyncs[i].text; break;
+
+            }
+            pendingSyncs.splice(i, 1);
+            i--;
+        }
+    }
+
+    fs.writeFileSync('pendingSyncs.json', JSON.stringify(pendingSyncs, null, 2));
+
+    var jsonResponse = {
+        verify: verify(request.body.user, request.body.key), 
+        updateAvailable: request.body.version !== productVersion, 
+        parsha: parsha, 
+        donors: donors, 
+        announcements: announcements, 
+        memorial: memorial
+    };
+
+    response.send(JSON.stringify(jsonResponse, null, 2));
+    console.log('sent to:' + request.ip + '\n' + JSON.stringify(jsonResponse, null, 2));
+
+}
 
 function addToPendingSyncs(request, response) {
     var data = request.body;
