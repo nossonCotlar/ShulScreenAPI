@@ -38,7 +38,7 @@ app.listen(port, function () {
 });
 
 function mainPost(request, response){
-    console.log(request.body);
+    console.log('content sent to: ' + request.body.user + '-' + request.body.key + ' @ ' + request.ip + '\n');
 
     var parsha, donors, announcements, memorial;
     try{ //try to set the parsha value to the requested path
