@@ -43,7 +43,7 @@ function mainPost(request, response){
     var parsha, donors, announcements, memorial;
     try{ //try to set the parsha value to the requested path
         parsha = fs.readFileSync('parsha/' + request.body.parsha + '/' + request.body.dayOfWeek + '.txt', 'ascii');
-    } catch { //if it fails set it to null
+    } catch(e) { //if it fails set it to null
         parsha = null;
     }
 
