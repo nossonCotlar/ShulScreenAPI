@@ -4,6 +4,7 @@
   "description": "just a test server",
   "main": "server.js",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "openssl": "^1.1.0",
     "xmlhttprequest": "^1.8.0"

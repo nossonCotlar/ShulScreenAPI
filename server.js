@@ -9,7 +9,7 @@ var https = require('https');
 var parser = require('body-parser');
 const fs = require('fs');
 const app = express();
-const port = 6969;
+const port = process.env.PORT || 1337;
 const secret = 'getBread1';
 
 /*
@@ -43,7 +43,7 @@ function mainPost(request, response){
     var parsha, donors, announcements, memorial;
     try{ //try to set the parsha value to the requested path
         parsha = fs.readFileSync('parsha/' + request.body.parsha + '/' + request.body.dayOfWeek + '.txt', 'ascii');
-    } catch { //if it fails set it to null
+    } catch(e) { //if it fails set it to null
         parsha = null;
     }
 
