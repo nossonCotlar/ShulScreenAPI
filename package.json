@@ -4,16 +4,38 @@
   "description": "just a test server",
   "main": "server.js",
   "dependencies": {
+    "@google-cloud/storage": "^3.2.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "openssl": "^1.1.0",
+    "process": "^0.11.10",
     "xmlhttprequest": "^1.8.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@google-cloud/nodejs-repo-tools": "^3.3.0"
+  },
   "scripts": {
     "test": "tes",
     "start": "node server.js",
     "build": "node.js build --output public"
+  },
+  "cloud-repo-tools": {
+    "requiresProjectId": true,
+    "requiresKeyFile": true,
+    "test": {
+      "app": {
+        "requiredEnvVars": [
+          "GCLOUD_STORAGE_BUCKET"
+        ],
+        "msg": "<input type=\"file\" name=\"file\">",
+        "substitutions": "YOUR_BUCKET_NAME=$GCLOUD_STORAGE_BUCKET"
+      },
+      "build": {
+        "requiredEnvVars": [
+          "GCLOUD_STORAGE_BUCKET"
+        ]
+      }
+    }
   },
   "author": "Nosson Cotlar",
   "license": "ISC"

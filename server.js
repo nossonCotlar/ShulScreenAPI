@@ -1,3 +1,5 @@
+"use strict";
+
 const productVersion = 'beta.1.0';
 const zmanimURL = 'https://api.myzmanim.com/engine1.json.aspx';
 const zmanimUser = '0010921043';
