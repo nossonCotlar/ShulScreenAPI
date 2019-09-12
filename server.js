@@ -14,6 +14,8 @@ const app = express();
 const port = process.env.PORT || 6969;
 const secret = 'getBread1';
 
+var writer = fs.createWriteStream('./logs');
+
 /*
 https.createServer({
     key: fs.readFileSync('ssl/ssl.key'), 
@@ -40,7 +42,6 @@ app.listen(port, function () {
 });
 
 function mainPost(request, response){
-    console.log('content sent to: ' + request.body.user + '-' + request.body.key + ' @ ' + request.ip + '\n');
 
     var parsha, donors, announcements, memorial;
     try{ //try to set the parsha value to the requested path
@@ -64,7 +65,7 @@ function mainPost(request, response){
         }
     }
 
-    fs.writeFileSync('pendingSyncs.json', JSON.stringify(pendingSyncs, null, 2));
+    fs.writeFile('pendingSyncs.json', JSON.stringify(pendingSyncs, null, 2), writeErr);
 
     var jsonResponse = {
         verify: verify(request.body.user, request.body.key), 
@@ -77,7 +78,7 @@ function mainPost(request, response){
     };
 
     response.send(JSON.stringify(jsonResponse, null, 2));
-    //console.log('sent to:' + request.ip + '\n' + JSON.stringify(jsonResponse, null, 2));
+    writer.write((new Date()).toUTCString() + '\n' + 'content sent to: ' + request.body.user + '-' + request.body.key + ' @ ' + request.ip + '\n\n');
 
 }
 
@@ -93,13 +94,11 @@ function addToPendingSyncs(request, response) {
             }
             else {
                 response.end('Couldn\'t submit: Incorrect user/key');
-                console.log('Couldn\'t submit: Incorrect user/key');
                 return;
             }
         }
         if (i == users.length - 1) {
             response.end('Couldn\'t submit: User not found');
-            console.log('Couldn\'t submit: User not found');
             return;
         }
     }
@@ -118,16 +117,16 @@ function addToPendingSyncs(request, response) {
         if (jsonPendings[i] == null) continue;
         if (jsonPendings[i].user == toPush.user && jsonPendings[i].selection == toPush.selection) {
             jsonPendings.splice(i, 1);
-            console.log(JSON.stringify(jsonPendings, null, 2));
-            console.log("replaced existing submission");
+            writer.write(JSON.stringify(jsonPendings, null, 2));
+            writer.write(" replaced existing submission\n\n");
             break;
         }
     }
     jsonPendings.push(toPush);
     var toWrite = JSON.stringify(jsonPendings, null, 2);
-    fs.writeFileSync('pendingSyncs.json', toWrite);
+    fs.writeFile('pendingSyncs.json', toWrite, writeErr);
     response.end("Submission Successful: \n" + JSON.stringify(toPush, null, 2));
-    console.log("Submission Successful: \n" + JSON.stringify(toPush, null, 2));
+    writer.write((new Date()).toUTCString() + "Submission Successful: \n" + JSON.stringify(toPush, null, 2)) + '\n\n';
 }
 function verify(user, key) {
     var users = fs.readFileSync('new.json', 'utf8'); //reads file data
@@ -161,10 +160,10 @@ function addLicenseFromPost(request, response) {
     var jsonFile = JSON.parse(text); //make it json
     jsonFile.push(objToAdd);
     var jsonFileString = JSON.stringify(jsonFile, null, 2);
-    fs.writeFileSync('new.json', jsonFileString);
+    fs.writeFile('new.json', jsonFileString, writeErr);
 
     response.end('User has been added!\n' + JSON.stringify(objToAdd, null, 2));
-    console.log('User has been added!\n' + JSON.stringify(objToAdd, null, 2));
+    writer.write((new Date()).toUTCString() + 'User has been added!\n' + JSON.stringify(objToAdd, null, 2)) + '\n\n';
 
 }
 
@@ -182,5 +181,11 @@ function zmanimPost(postalCode, dateString){
 
     return xhr.responseText;
 
+}
+
+function writeErr(err){
+    if(err){
+        writer.write((new Date()).toUTCString() + ':' + err + '\n\n');
+    }
 }
 
