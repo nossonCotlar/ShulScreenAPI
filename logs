@@ -1,33 +1,9 @@
-Thu, 12 Sep 2019 03:02:01 GMT
-content sent to: sampleUser-sampleKey @ ::ffff:196.52.2.102
+Sun, 15 Sep 2019 04:25:04 GMT
+content sent to: me-test @ ::ffff:127.0.0.1
 
-Thu, 12 Sep 2019 03:11:03 GMTSubmission Successful: 
-{
-  "user": "me",
-  "key": "test",
-  "selection": "memorial",
-  "text": "blah blah test"
-}Thu, 12 Sep 2019 03:11:55 GMT
-content sent to: me-test @ ::ffff:196.52.2.102
+Sun, 15 Sep 2019 04:25:29 GMT
+content sent to: me-test @ ::ffff:127.0.0.1
 
-Thu, 12 Sep 2019 03:12:39 GMTSubmission Successful: 
-{
-  "user": "me",
-  "key": "test",
-  "selection": "memorial",
-  "text": "In Loving Memory of [Enter Name Here]"
-}Thu, 12 Sep 2019 03:12:47 GMT
-content sent to: me-test @ ::ffff:196.52.2.102
-
-Thu, 12 Sep 2019 22:46:58 GMTUser has been added!
-{
-  "user": "ishapcha770@gmail.com",
-  "key": "JAK6-A17H-A8D0-AB73",
-  "type": "Beta",
-  "dateAdded": "Thu, 12 Sep 2019 22:46:58 GMT"
-}Fri, 13 Sep 2019 02:44:17 GMT
-content sent to: sampleUser-sampleKey @ ::ffff:24.246.75.163
-
-Fri, 13 Sep 2019 02:46:54 GMT
-content sent to: sampleUser-sampleKey @ ::ffff:24.246.75.163
+Sun, 15 Sep 2019 04:26:28 GMT
+content sent to: me-test @ ::ffff:127.0.0.1
 

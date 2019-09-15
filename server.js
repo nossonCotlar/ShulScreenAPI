@@ -71,7 +71,7 @@ function mainPost(request, response){
         verify: verify(request.body.user, request.body.key), 
         updateAvailable: request.body.version !== productVersion, 
         parsha: parsha, 
-        zmanim: zmanimPost(request.body.postalCode, request.body.dateString), 
+        zmanim: zmanimPost(request.body.postalCode, request.body.dateString, request.body.latitude, request.body.longitude), 
         donors: donors, 
         announcements: announcements, 
         memorial: memorial
@@ -167,10 +167,13 @@ function addLicenseFromPost(request, response) {
 
 }
 
-function zmanimPost(postalCode, dateString){
+function zmanimPost(postalCode, dateString, lat, long){
     var xhr = new XMLHttpRequest();
+    var locationID;
+    if(postalCode) locationID = JSON.parse(locationByPostal(postalCode)).LocationID;
+    else if(lat && long) locationID = JSON.parse(locationByGPS(lat, long)).LocationID;
     var params = 'coding=JS&language=en' + 
-    '&locationid=US' + postalCode + 
+    '&locationid=' + locationID + 
     '&inputdate=' + dateString + 
     '&key=' + zmanimKey + 
     '&user=' + zmanimUser;
@@ -181,6 +184,31 @@ function zmanimPost(postalCode, dateString){
 
     return xhr.responseText;
 
+}
+
+function locationByPostal(postal){
+    var xhr = new XMLHttpRequest();
+    var params = 'coding=JS&language=en' + 
+    '&query=' + postal + 
+    '&key=' + zmanimKey + 
+    '&user=' + zmanimUser;
+    xhr.open('POST', zmanimURL + '/searchPostal', false);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(params);
+
+    return xhr.responseText;
+}
+function locationByGPS(lat, long){
+    var xhr = new XMLHttpRequest();
+    var params = 'coding=JS&language=en' + 
+    '&latitude=' + lat + 
+    '&longitude=' + long + 
+    '&key=' + zmanimKey + 
+    '&user=' + zmanimUser;
+    xhr.open('POST', zmanimURL + '/searchGps', false);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(params);
+    return xhr.responseText;
 }
 
 function writeErr(err){
