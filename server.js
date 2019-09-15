@@ -1,6 +1,6 @@
 "use strict";
 
-const productVersion = 'beta.1.0';
+const productVersion = 'beta.1.1';
 const zmanimURL = 'https://api.myzmanim.com/engine1.json.aspx';
 const zmanimUser = '0010921043';
 const zmanimKey = 'ff71bd8bec18ecc3a6716ca8e6462f52646b8a774d1b292d63d37ee9618cede940d4ae97277af79d';
