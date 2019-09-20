@@ -1,0 +1,9 @@
+Fri, 20 Sep 2019 06:02:27 GMTUser has been added!
+{
+  "user": "nosson@rape.lol",
+  "fname": "Nosson",
+  "lname": "Cotlar",
+  "type": "Beta",
+  "dateAdded": "Fri, 20 Sep 2019 06:02:27 GMT",
+  "key": "c3ot918sp6nV3Y6SO3F5AT"
+}

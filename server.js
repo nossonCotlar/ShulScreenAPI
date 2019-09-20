@@ -14,7 +14,7 @@ const app = express();
 const port = process.env.PORT || 6969;
 const secret = 'getBread1';
 
-var writer = fs.createWriteStream('./logs');
+var writer = fs.createWriteStream('./logs.txt');
 
 /*
 https.createServer({
@@ -145,25 +145,32 @@ function verify(user, key) {
 }
 function addLicenseFromPost(request, response) {
 
-    var objToAdd = request.body;
-    //console.log(objToAdd);
-    if (objToAdd.secret != secret) {
+    var submission = request.body;
+    
+    console.log(submission);
+    if (submission.secret != secret) {
         response.end('secret is incorrect');
-        console.log(objToAdd.secret);
+        console.log(submission.secret);
         console.log('License addition attempted: incorrect secret');
         return;
     }
-    delete objToAdd.secret;
-    objToAdd.dateAdded = (new Date()).toUTCString();
+    var userToAdd = {
+        user: submission.email, 
+        fname: submission.firstname, 
+        lname: submission.lastname, 
+        type: submission.type, 
+        dateAdded: (new Date()).toUTCString(), 
+        key: Math.random().toString(36).substring(2, 16) + Math.random().toString(36).substring(2, 16).toUpperCase(), 
+    };
 
     var text = fs.readFileSync('new.json', 'utf8'); //reads file data
     var jsonFile = JSON.parse(text); //make it json
-    jsonFile.push(objToAdd);
+    jsonFile.push(userToAdd);
     var jsonFileString = JSON.stringify(jsonFile, null, 2);
     fs.writeFile('new.json', jsonFileString, writeErr);
 
-    response.end('User has been added!\n' + JSON.stringify(objToAdd, null, 2));
-    writer.write((new Date()).toUTCString() + 'User has been added!\n' + JSON.stringify(objToAdd, null, 2)) + '\n\n';
+    response.end('User has been added!\n' + JSON.stringify(userToAdd, null, 2));
+    writer.write((new Date()).toUTCString() + 'User has been added!\n' + JSON.stringify(userToAdd, null, 2)) + '\n\n';
 
 }
 
